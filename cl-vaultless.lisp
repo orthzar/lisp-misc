@@ -20,7 +20,9 @@
 ;;;   This isn't complicated.
 ;;;   But, don't get mad at me if you lose access to something.
 
-(defpackage :cl-vaultless)
+(defpackage :cl-vaultless
+  (:use #:cl)
+  (:export #:derive-password))
 (in-package :cl-vaultless)
 
 (ql:quickload :ironclad)
@@ -35,7 +37,3 @@
 (defun derive-password (master-password url username)
   "Master-password is something you need to come up with. URL could be a website (e.g. gmail.com), but keep it trivial to remember. USERNAME is self-explanatory."
   (print (shake128 (concatenate 'string master-password url username))))
-
-(derive-password "staple horse remove battery network"
-                 "gmail.com"
-                 "alfranken123")
