@@ -7,7 +7,7 @@
 ;;; 
 ;;; Actual (non-joke) Summary:
 ;;; Vaultless is a password "manager" which requires no storage.
-;;; Instead, you give it a master password, URL, and username, and Vaultless spits out a hash, which is your password.
+;;; Instead, you give it a master-password, URL, username, and optional counter, and Vaultless spits out a hash, which is your password.
 ;;; Generating a new password is the same operation as generating an old password.
 ;;;
 ;;; How to Use this:
@@ -15,6 +15,9 @@
 ;;;     (a) MASTER-PASSWORD needs to be as long and random as you can make it (I recommend Diceware)
 ;;;     (b) URL can be a website (e.g. gmail.com) or a computer hostname (e.g. atlas-012)
 ;;;     (c) Make URL and USERNAME as memorable as possible. (e.g. "gmail.com" is easier to remember than "google.com/mail")
+;;;     (d) COUNTER is optional and intended to be used when you need another password for a website.
+;;;         In that case, you will need to either remember, store, or guess the counter.
+;;;         (Warning: guessing the counter could get you locked out of your account.)
 ;;;   (2) Paste that password into the website.
 ;;;   (3) When you return to log into that website, repeat (1) and (2).
 ;;;
@@ -44,9 +47,9 @@
    (ironclad:digest-sequence
     :shake128 (flexi-streams:string-to-octets string))))
 
-(defun derive-password (master-password url username)
+(defun derive-password (master-password url username &optional counter)
   "Prints a hash of three strings. That's it. That's the password manager."
-  (print (shake128 (concatenate 'string master-password url username))))
+  (print (shake128 (concatenate 'string master-password url username counter))))
 
 ;; Example usage:
 ;; (derive-password "example master password" "example.com" "example_username")
