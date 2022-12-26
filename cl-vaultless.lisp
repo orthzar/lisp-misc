@@ -24,12 +24,11 @@
 ;;; You could keep a list of usernames and URLs in a text file, since that information is borderline public information anyways.
 ;;; 
 ;;; Warnings:
-;;;   (1) Do not use this unless you understand how it works. 
-;;;   (2) In the event of a password leak, the most you can do with Vaultless is to use a new master password.
-;;;       But then it isn't really a master password anymore. (This is a lesson for all those who want everything to be simple.)
-;;;   (3) Vaultless, presently, cannot make short passwords (for websites that have password length limits),
-;;;       nor can it make passwords with special characters in it (it only outputs numbers and lowercare letters).
-;;;       All I can say is that those are badly-run websites and you shouldn't trust them.
+;;;   (1) Do not use this unless you understand how it works.
+;;;   (2) Vaultless cannot make short passwords for websites that have password length limits, or character
+;;;       requirements (e.g. special characters, upper case cahracters). Vaultless only outputs numbers and lowercare letters.
+;;;       Such websites are either run by incompetent people, or they are coerced to use asinine password rules by some government.
+;;;       In either case, such websites are unfit to exist. Don't use them.
 
 (defpackage :cl-vaultless
   (:use #:cl)
