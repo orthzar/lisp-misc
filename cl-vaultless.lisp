@@ -1,7 +1,7 @@
 ;;;; cl-vaultless.lisp
 ;;; 
 ;;; Buzzword Summary:
-;;; Vaultless is a serverless, stateless, mobile-optimized, quantum-resistant password manager,
+;;; Vaultless is a serverless, stateless, mobile-optimized, quantum-resistant, AI-safe password manager,
 ;;; which fights password fatigue by being storage-efficient and by upcycling an uncommon hash function.
 ;;; This innovative open-source technology is guaranteed to disrupt the legacy cloud-based password management market.
 ;;; 
