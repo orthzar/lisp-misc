@@ -46,10 +46,32 @@
    (ironclad:digest-sequence
     :shake128 (flexi-streams:string-to-octets string))))
 
+(defun sha512 (string)
+  "Given a string, return a SHA512 hash of that string"
+  (ironclad:byte-array-to-hex-string
+   (ironclad:digest-sequence
+    :sha512 (flexi-streams:string-to-octets string))))
+
+(defun blake2 (string)
+  "Given a string, return a SHA3 hash of that string"
+  (ironclad:byte-array-to-hex-string
+   (ironclad:digest-sequence
+    :blake2 (flexi-streams:string-to-octets string))))
+
+;; Three different hash functions are used just in case a serious flaw is found in one or two of the hash functions.
+;; If two of these hash functions fail, then the security of this password manager is no lower than the third hash function.
 (defun derive-password (master-password url username &optional counter)
   "Prints a hash of three strings. That's it. That's the password manager."
-  (print (shake128 (concatenate 'string master-password url username counter))))
+  (print
+   ;; SHAKE128 was shosen because it returns 128 bits, which is short enough for most password prompts, and because it is derived from SHA3.
+   ;; While SipHash could have been chosen because it returns 64 bits, it requires a fixed length key, and I don't yet want to think about how to handle that.
+   (shake128
+    ;; SHA512 was chosen for it's output length and for it's continued resistance to cracking.
+    (sha512
+     ;; BLAKE2 was chosen for using ARX.
+     (blake2
+      (concatenate 'string master-password url username counter))))))
 
 ;; Example usage:
 ;; (derive-password "example master password" "example.com" "example_username")
-;; => "b9c50f5a670a4da91785aa672e504a81"
+;; => "c3e6afe8d660d99477f689cab791fdb0"
